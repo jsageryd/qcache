@@ -106,6 +106,15 @@ func (c *Cache) Set(key interface{}, value interface{}) {
 	c.mu.Unlock()
 }
 
+// Size returns the number of items in the cache. Items expired but not yet
+// purged are included.
+func (c *Cache) Size() int {
+	c.mu.RLock()
+	s := len(c.items)
+	c.mu.RUnlock()
+	return s
+}
+
 func (c *Cache) setTimer(dur time.Duration) {
 	if dur < c.maxPurgeInterval {
 		dur = c.maxPurgeInterval

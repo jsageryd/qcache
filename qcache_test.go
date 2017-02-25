@@ -134,6 +134,26 @@ func TestSetExisting(t *testing.T) {
 	}
 }
 
+func TestSize(t *testing.T) {
+	c := New(10*time.Millisecond, WithMaxPurgeInterval(0))
+
+	if got, want := c.Size(), 0; got != want {
+		t.Errorf("c.Size() = %d, want %d", got, want)
+	}
+
+	c.Set("key", "value")
+
+	if got, want := c.Size(), 1; got != want {
+		t.Errorf("c.Size() = %d, want %d", got, want)
+	}
+
+	time.Sleep(20 * time.Millisecond)
+
+	if got, want := c.Size(), 0; got != want {
+		t.Errorf("c.Size() = %d, want %d", got, want)
+	}
+}
+
 func TestTimerRestart(t *testing.T) {
 	c := New(10*time.Millisecond, WithMaxPurgeInterval(0))
 
