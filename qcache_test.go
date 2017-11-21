@@ -134,6 +134,32 @@ func TestSetExisting(t *testing.T) {
 	}
 }
 
+func TestSetUpdatesTTL(t *testing.T) {
+	c := New(50 * time.Millisecond)
+	c.Set("key", "value")
+	time.Sleep(30 * time.Millisecond)
+	c.Set("key", "value")
+	time.Sleep(30 * time.Millisecond)
+	gotValue, ok := c.Get("key")
+
+	if gotValue != "value" || !ok {
+		t.Errorf(`c.Get("key") = %v, %t; want "value", true`, gotValue, ok)
+	}
+}
+
+func TestSetUpdatesValue(t *testing.T) {
+	c := New(50 * time.Millisecond)
+	c.Set("key", "value")
+	time.Sleep(30 * time.Millisecond)
+	c.Set("key", "value2")
+	time.Sleep(30 * time.Millisecond)
+	gotValue, ok := c.Get("key")
+
+	if gotValue != "value2" || !ok {
+		t.Errorf(`c.Get("key") = %v, %t; want "value", true`, gotValue, ok)
+	}
+}
+
 func TestSize(t *testing.T) {
 	c := New(10*time.Millisecond, WithMaxPurgeInterval(0))
 

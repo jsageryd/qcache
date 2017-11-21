@@ -81,13 +81,8 @@ func (c *Cache) Get(key interface{}) (interface{}, bool) {
 	return nil, false
 }
 
-// Set sets the given key to the given value. If the given key already exists,
-// Set is a no-op.
+// Set sets the given key to the given value.
 func (c *Cache) Set(key interface{}, value interface{}) {
-	if _, ok := c.Get(key); ok {
-		return
-	}
-
 	c.mu.Lock()
 
 	i := &item{
@@ -139,7 +134,9 @@ func (c *Cache) expire() {
 	}
 
 	for _, item := range c.queue[:offset] {
-		delete(c.items, item.key)
+		if i, ok := c.items[item.key]; ok && i.expires == item.expires {
+			delete(c.items, item.key)
+		}
 	}
 
 	c.queue = c.queue[offset:]

@@ -29,8 +29,6 @@ func main() {
 }
 ```
 
-## Note
-Setting a value twice does not reset its expiration timer.
 
 ## License
 Copyright (c) 2017 Johan Sageryd <j@1616.se>
