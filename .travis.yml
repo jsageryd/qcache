@@ -4,7 +4,7 @@ go:
   - "1.10.2"
 
 install:
-  - go get github.com/golang/lint/golint
+  - go get golang.org/x/lint/golint
 
 script:
   - golint -set_exit_status
