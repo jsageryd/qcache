@@ -8,4 +8,4 @@ install:
 
 script:
   - golint -set_exit_status
-  - go test ./...
+  - go test
