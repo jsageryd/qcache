@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jsageryd/qcache.svg?branch=master)](https://travis-ci.org/jsageryd/qcache)
 [![Go Report Card](https://goreportcard.com/badge/github.com/jsageryd/qcache)](https://goreportcard.com/report/github.com/jsageryd/qcache)
-[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/jsageryd/qcache)
+[![Documentation](https://img.shields.io/badge/pkg.go.dev-reference-blue.svg?style=flat)](https://pkg.go.dev/github.com/jsageryd/qcache)
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/jsageryd/qcache#license)
 
 Queue-based thread-safe expiring in-memory cache.
