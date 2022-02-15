@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Run tests
+    name: Run tests and static analysis
     strategy:
       matrix:
         go: [1.17.7]
@@ -19,3 +19,8 @@ jobs:
 
       - name: Run tests
         run: go test
+
+      - name: Run static analysis
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@latest
+          staticcheck
