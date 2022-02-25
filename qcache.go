@@ -142,6 +142,10 @@ func (c *Cache) expire() {
 		delete(c.items, item.key)
 	}
 
+	for i := 0; i < offset; i++ {
+		c.queue[i] = nil
+	}
+
 	c.queue = c.queue[offset:]
 
 	if len(c.queue) > 0 {
