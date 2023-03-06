@@ -1,3 +1,3 @@
 module github.com/jsageryd/qcache
 
-go 1.17
+go 1.20

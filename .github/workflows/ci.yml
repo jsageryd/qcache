@@ -10,7 +10,7 @@ jobs:
     name: Run tests and static analysis
     strategy:
       matrix:
-        go: [1.17.7]
+        go: ["1.20"]
     runs-on: ubuntu-latest
     container: golang:${{ matrix.go }}-buster
     steps:
