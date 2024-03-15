@@ -9,7 +9,7 @@ import (
 // Cache is a key-value cache for arbitrary data.
 type Cache struct {
 	itemTTL          time.Duration
-	items            map[interface{}]*item
+	items            map[any]*item
 	maxPurgeInterval time.Duration
 	mu               sync.RWMutex
 	queue            []*item
@@ -18,15 +18,15 @@ type Cache struct {
 
 type item struct {
 	expires time.Time
-	key     interface{}
-	value   interface{}
+	key     any
+	value   any
 }
 
 // New instantiates a new cache where items expire after given itemTTL.
 func New(itemTTL time.Duration, options ...func(*Cache)) *Cache {
 	c := &Cache{
 		itemTTL:          itemTTL,
-		items:            make(map[interface{}]*item),
+		items:            make(map[any]*item),
 		maxPurgeInterval: 1 * time.Second,
 		queue:            []*item{},
 	}
@@ -62,13 +62,13 @@ func WithMaxPurgeInterval(i time.Duration) func(*Cache) {
 // ExpireAll expires all keys.
 func (c *Cache) ExpireAll() {
 	c.mu.Lock()
-	c.items = make(map[interface{}]*item)
+	c.items = make(map[any]*item)
 	c.queue = []*item{}
 	c.mu.Unlock()
 }
 
 // Get retreives the value for the given key.
-func (c *Cache) Get(key interface{}) (interface{}, bool) {
+func (c *Cache) Get(key any) (any, bool) {
 	c.mu.RLock()
 
 	if v, ok := c.items[key]; ok && !time.Now().After(v.expires) {
@@ -83,7 +83,7 @@ func (c *Cache) Get(key interface{}) (interface{}, bool) {
 
 // Set sets the given key to the given value. If the given key already exists,
 // Set is a no-op.
-func (c *Cache) Set(key interface{}, value interface{}) {
+func (c *Cache) Set(key any, value any) {
 	if _, ok := c.Get(key); ok {
 		return
 	}
